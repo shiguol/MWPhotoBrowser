@@ -259,7 +259,17 @@
         if (SYSTEM_VERSION_LESS_THAN(@"7")) buttonName = @"UIBarButtonItemGridiOS6";
         [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:[NSString stringWithFormat:@"MWPhotoBrowser.bundle/images/%@.png", buttonName]] style:UIBarButtonItemStylePlain target:self action:@selector(showGridAnimated)]];
     } else {
+      
+      if (_enableSaveToFavorited) {
+        hasItems = YES;
+        NSString *buttonName = @"UIBarButtonItemFavorited";
+        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:buttonName]
+                                                          style:UIBarButtonItemStylePlain
+                                                         target:self
+                                                         action:@selector(handleSaveToFavorited)]];
+      } else {
         [items addObject:fixedSpace];
+      }
     }
 
     // Middle - Nav
@@ -1139,6 +1149,15 @@
 
 - (void)showGridAnimated {
     [self showGrid:YES];
+}
+
+- (void)handleSaveToFavorited
+{
+  // TODO:
+  if ([_delegate respondsToSelector:@selector(handleSaveToFavorited:photoAtIndex:)]) {
+    // Call delegate method and let them dismiss us
+    [_delegate handleSaveToFavorited:self photoAtIndex:_currentPageIndex];
+  }
 }
 
 - (void)showGrid:(BOOL)animated {
