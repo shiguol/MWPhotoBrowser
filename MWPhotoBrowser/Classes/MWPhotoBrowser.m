@@ -262,9 +262,7 @@
       
       if (_enableSaveToFavorited) {
         hasItems = YES;
-        NSString *buttonName = @"UIBarButtonItemFavorited";
-        [items addObject:[[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:buttonName]
-                                                          style:UIBarButtonItemStylePlain
+        [items addObject:[[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemBookmarks
                                                          target:self
                                                          action:@selector(handleSaveToFavorited)]];
       } else {
